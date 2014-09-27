@@ -22,6 +22,7 @@ public class LangtonMain {
 	                myFourmi.startAt(50, 50);
 	                
 	                /** build terrain */
+	                
 	                LangtonGUI terrain = new Terrain();
 	                
 	                /** add fourmi and show gui */

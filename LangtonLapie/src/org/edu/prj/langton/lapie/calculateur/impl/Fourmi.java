@@ -14,6 +14,7 @@ public class Fourmi implements LangtonEngine{
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
+		
 	}
 
 	@Override

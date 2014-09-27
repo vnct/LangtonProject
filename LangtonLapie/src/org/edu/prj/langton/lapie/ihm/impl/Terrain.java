@@ -46,8 +46,8 @@ public class Terrain extends JFrame  implements LangtonGUI{
 		JButton btnNextGeneration = new JButton("Next Generation");
 		panel.add(btnNextGeneration);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
+		UIMatrix uiMatrix = new UIMatrix();
+		contentPane.add(uiMatrix, BorderLayout.CENTER);
 		
 	}
 
