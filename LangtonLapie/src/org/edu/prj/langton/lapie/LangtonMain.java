@@ -3,6 +3,8 @@ package org.edu.prj.langton.lapie;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFrame;
+
 import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.LangtonGUI;
 import org.edu.prj.langton.lapie.calculateur.impl.Fourmi;
@@ -18,9 +20,13 @@ public class LangtonMain {
 				try {
 					/** build fourmi */
 	                LangtonEngine myFourmi = new Fourmi();
-	                myFourmi.initialise(100, 100);
-	                myFourmi.startAt(50, 50);
-	                
+	                myFourmi.initialise(200,200);
+	                myFourmi.startAt(100,100);
+	                Integer max=13000;
+	                for(Integer n=0;n<max;n++)
+	                {
+	                	myFourmi.nextGeneration();
+	                }
 	                /** build terrain */
 	                
 	                LangtonGUI terrain = new Terrain();

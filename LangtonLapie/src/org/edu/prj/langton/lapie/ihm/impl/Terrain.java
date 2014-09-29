@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,16 +12,19 @@ import javax.swing.border.EmptyBorder;
 
 import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.LangtonGUI;
+import org.edu.prj.langton.lapie.calculateur.impl.Fourmi;
 import org.edu.prj.langton.utils.LMatrix;
 import org.edu.prj.langton.utils.UIMatrix;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JButton;
 
-public class Terrain extends JFrame  implements LangtonGUI{
+public class Terrain extends JFrame implements LangtonGUI{
 
 	private JPanel contentPane;
+	private UIMatrix uiMatrix = new UIMatrix();
 
 
 	/**
@@ -28,7 +32,7 @@ public class Terrain extends JFrame  implements LangtonGUI{
 	 */
 	public Terrain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 666, 443);
+		setBounds(100, 100, 700, 500);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -46,16 +50,24 @@ public class Terrain extends JFrame  implements LangtonGUI{
 		JButton btnNextGeneration = new JButton("Next Generation");
 		panel.add(btnNextGeneration);
 		
-		UIMatrix uiMatrix = new UIMatrix();
 		contentPane.add(uiMatrix, BorderLayout.CENTER);
+		
 		
 	}
 
 
+	//add fourmi in gui
 	@Override
-	public void addFourmi(LangtonEngine arg0) {
-		// TODO Auto-generated method stub
+	public void addFourmi(LangtonEngine fourmi) {
+		uiMatrix.update(fourmi.getState());
+	
 		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void show()
+	{
+		super.show();
 	}
 
 }
