@@ -1,29 +1,56 @@
 package org.edu.prj.langton.lapie.calculateur.impl;
 
+import java.util.Random;
+
 import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.utils.LMatrix;
 
 public class Fourmi implements LangtonEngine{
 
-	private String name;
-	private LMatrix lMatrix;
-	private Integer positionX;
-	private Integer positionY;
-	private enum Direction 	{
+	protected String name;
+	protected LMatrix lMatrix;
+	protected Integer positionX;
+	protected Integer positionY;
+	protected enum Direction 	{
 			aucune, ouest, est, nord, sud
 		};
-	private Direction direction;
+		protected Direction direction;
 	
 	public Fourmi() {
 		lMatrix = null;
-		direction = Direction.ouest;
+		chooseDirection(getRandom(1, 4));
 	}
 	public Fourmi(String sname) {
 		lMatrix = null;
 		name = sname;
+		chooseDirection(getRandom(1, 4));
 		
 	}
 
+	protected int getRandom(int min,int max)
+	{
+		Random rand = new Random();
+		return rand.nextInt(max - min + 1) + min;
+	}
+	protected void chooseDirection(Integer i)
+	{
+		switch (i) {
+		case 1:
+			direction = Direction.ouest;
+			break;
+		case 2:
+			direction = Direction.nord;
+			break;
+		case 3:
+			direction = Direction.est;
+			break;	
+		case 4:
+			direction = Direction.sud;
+			break;
+		default:
+			break;
+		}
+	}
 
 	//Return the name of author 
 	@Override
@@ -54,12 +81,13 @@ public class Fourmi implements LangtonEngine{
 
 	@Override
 	public void nextGeneration() {
-		// TEST LE DEPLACEMENT DE LA FOURMI. DEPLACEMENT CON POUR LE MOMENT
 
-		Boolean cellwhite = lMatrix.getValue(this.positionX, this.positionY);
-		if(cellwhite)
+
+		Boolean cellIsWhite = lMatrix.getValue(this.positionX, this.positionY);
+		if(cellIsWhite)
 		{
 			lMatrix.unActivateCell(this.positionX, this.positionY);
+			
 		}
 		else
 		{
@@ -75,10 +103,10 @@ public class Fourmi implements LangtonEngine{
 		 */
 		switch (direction) {
 		case aucune:
-			
+				
 			break;
 		case est:
-			if(cellwhite)
+			if(cellIsWhite)
 			{
 				direction = Direction.nord;
 				nextPosition(this.positionX, this.positionY-1);
@@ -90,7 +118,7 @@ public class Fourmi implements LangtonEngine{
 			}
 			break;	
 		case nord:
-			if(cellwhite)
+			if(cellIsWhite)
 			{
 				direction = Direction.ouest;
 				nextPosition(this.positionX-1, this.positionY);
@@ -102,7 +130,7 @@ public class Fourmi implements LangtonEngine{
 			}
 			break;	
 		case ouest:
-			if(cellwhite)
+			if(cellIsWhite)
 			{
 				direction = Direction.sud;
 				nextPosition(this.positionX, this.positionY+1);
@@ -114,7 +142,7 @@ public class Fourmi implements LangtonEngine{
 			}	
 			break;	
 		case sud:
-			if(cellwhite)
+			if(cellIsWhite)
 			{
 				direction = Direction.est;
 				nextPosition(this.positionX+1, this.positionY);
