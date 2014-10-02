@@ -26,7 +26,10 @@ public class Fourmi implements LangtonEngine{
 		chooseDirection(getRandom(1, 4));
 		
 	}
-
+	public void initPosition()
+	{
+		chooseDirection(getRandom(1, 4));
+	}
 	protected int getRandom(int min,int max)
 	{
 		Random rand = new Random();
@@ -75,8 +78,37 @@ public class Fourmi implements LangtonEngine{
 	
 	public void nextPosition(Integer posX,Integer posY)
 	{
+		//System.out.println("--------");
+
 		this.positionX = posX;
 		this.positionY = posY;
+		//System.out.println(positionX);
+		//System.out.println(positionY);
+		if(this.positionX<0)
+		{
+			this.positionX =lMatrix.getNumberOfColumn()-1;
+			direction = Direction.aucune;
+		}
+		if(this.positionY<0)
+		{
+			this.positionY=lMatrix.getNumberOfLine()-1;
+			direction = Direction.aucune;
+		}
+		if(this.positionX>=lMatrix.getNumberOfColumn())
+		{
+		
+			this.positionX =1;
+			direction = Direction.aucune;
+		}
+		if(this.positionY>=lMatrix.getNumberOfLine())
+		{
+			this.positionY=1;
+			direction = Direction.aucune;
+		}
+		/*System.out.println("______________");
+		System.out.println(positionX);
+		System.out.println(positionY);*/
+
 	}
 
 	@Override
