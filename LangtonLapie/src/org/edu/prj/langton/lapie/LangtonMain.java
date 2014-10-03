@@ -38,6 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -51,6 +52,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 	private JTextField textField_positionY;
 	Integer largeur = 300;
 	Integer hauteur = 300;
+	private JTextField textField_step;
 
 	/**
 	 * Launch the application.
@@ -104,20 +106,48 @@ public class LangtonMain extends JFrame implements ActionListener {
 		JPanel settings = new JPanel();
 		GridBagLayout gbl_settings = new GridBagLayout();
 		gbl_settings.columnWidths = new int[]{69, 0, 0};
-		gbl_settings.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0};
+		gbl_settings.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_settings.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_settings.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_settings.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		settings.setLayout(gbl_settings);
 		
 		JButton btnNextgeneration = new JButton("Next Generation");
 		btnNextgeneration.addActionListener(this);
+		
+		JButton btnSimulation = new JButton("Start / Stop");
+		btnSimulation.addActionListener(this);
+		GridBagConstraints gbc_btnSimulation = new GridBagConstraints();
+		gbc_btnSimulation.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSimulation.gridwidth = 2;
+		gbc_btnSimulation.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSimulation.gridx = 0;
+		gbc_btnSimulation.gridy = 0;
+		settings.add(btnSimulation, gbc_btnSimulation);
+		
+		JLabel lblStep = new JLabel("Step :");
+		GridBagConstraints gbc_lblStep = new GridBagConstraints();
+		gbc_lblStep.insets = new Insets(10, 0, 5, 5);
+		gbc_lblStep.gridx = 0;
+		gbc_lblStep.gridy = 1;
+		settings.add(lblStep, gbc_lblStep);
+		
+		textField_step = new JTextField();
+		textField_step.setText("200");
+		GridBagConstraints gbc_textField_step = new GridBagConstraints();
+		gbc_textField_step.insets = new Insets(10, 0, 5, 0);
+		gbc_textField_step.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_step.gridx = 1;
+		gbc_textField_step.gridy = 1;
+		settings.add(textField_step, gbc_textField_step);
+		textField_step.setColumns(10);
+		
 		GridBagConstraints gbc_btnNextgeneration = new GridBagConstraints();
 		gbc_btnNextgeneration.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNextgeneration.gridwidth = 2;
 		gbc_btnNextgeneration.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNextgeneration.anchor = GridBagConstraints.NORTH;
 		gbc_btnNextgeneration.gridx = 0;
-		gbc_btnNextgeneration.gridy = 0;
+		gbc_btnNextgeneration.gridy = 2;
 		settings.add(btnNextgeneration, gbc_btnNextgeneration);
 		
 		JLabel lblPositionFourmi = new JLabel("Position Fourmi :");
@@ -125,14 +155,14 @@ public class LangtonMain extends JFrame implements ActionListener {
 		gbc_lblPositionFourmi.gridwidth = 2;
 		gbc_lblPositionFourmi.insets = new Insets(20, 0, 5, 0);
 		gbc_lblPositionFourmi.gridx = 0;
-		gbc_lblPositionFourmi.gridy = 1;
+		gbc_lblPositionFourmi.gridy = 3;
 		settings.add(lblPositionFourmi, gbc_lblPositionFourmi);
 		
 		JLabel lblPositionX = new JLabel("Position X :");
 		GridBagConstraints gbc_lblPositionX = new GridBagConstraints();
 		gbc_lblPositionX.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPositionX.gridx = 0;
-		gbc_lblPositionX.gridy = 2;
+		gbc_lblPositionX.gridy = 4;
 		settings.add(lblPositionX, gbc_lblPositionX);
 		
 		textField_positionX = new JTextField();
@@ -141,7 +171,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		gbc_textField_positionX.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_positionX.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_positionX.gridx = 1;
-		gbc_textField_positionX.gridy = 2;
+		gbc_textField_positionX.gridy = 4;
 		settings.add(textField_positionX, gbc_textField_positionX);
 		textField_positionX.setColumns(8);
 		
@@ -149,7 +179,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		GridBagConstraints gbc_lblPositionY = new GridBagConstraints();
 		gbc_lblPositionY.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPositionY.gridx = 0;
-		gbc_lblPositionY.gridy = 3;
+		gbc_lblPositionY.gridy = 5;
 		settings.add(lblPositionY, gbc_lblPositionY);
 		
 		textField_positionY = new JTextField();
@@ -158,7 +188,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		gbc_textField_positionY.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_positionY.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_positionY.gridx = 1;
-		gbc_textField_positionY.gridy = 3;
+		gbc_textField_positionY.gridy = 5;
 		settings.add(textField_positionY, gbc_textField_positionY);
 		textField_positionY.setColumns(6);
 		
@@ -188,7 +218,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		gbc_btnRestart.gridwidth = 2;
 		gbc_btnRestart.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRestart.gridx = 0;
-		gbc_btnRestart.gridy = 4;
+		gbc_btnRestart.gridy = 6;
 		settings.add(btnRestart, gbc_btnRestart);
 		
 		JButton btnSwitchColor = new JButton("Switch Color");
@@ -198,7 +228,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		gbc_btnSwitchColor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSwitchColor.gridwidth = 2;
 		gbc_btnSwitchColor.gridx = 0;
-		gbc_btnSwitchColor.gridy = 6;
+		gbc_btnSwitchColor.gridy = 7;
 		btnSwitchColor.addActionListener(this);
 		settings.add(btnSwitchColor, gbc_btnSwitchColor);
 		contentPane.setLayout(gl_contentPane);
@@ -209,6 +239,14 @@ public class LangtonMain extends JFrame implements ActionListener {
     	
 
 	}
+	Timer mySwingTimer = new Timer(10, new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	myFourmi.nextGeneration();
+			myterrain.addFourmi(myFourmi);
+        }
+     });
 	
 	public void initFourmi(Integer largeur, Integer hauteur,Integer posX, Integer posY)
 	{
@@ -228,7 +266,28 @@ public class LangtonMain extends JFrame implements ActionListener {
 			System.exit(0);
 			break;
 		case "Next Generation":
-			nextGeneration(200);
+			try{
+				nextGeneration(Integer.parseInt(textField_step.getText()));
+			}
+			catch(Exception exception)
+			{
+				System.out.println("E");
+			}
+			
+			break;
+		case "Start / Stop":
+			
+			 if(mySwingTimer.isRunning())
+			 {
+				 mySwingTimer.stop();
+			 }
+			 else
+			 {
+				 
+				 mySwingTimer.start();
+			 }
+		      
+				
 			break;
 		case "Restart":
 			try{
