@@ -88,23 +88,23 @@ public class Fourmi implements LangtonEngine{
 		//System.out.println(positionY);
 		if(this.positionX<0)
 		{
-			this.positionX =lMatrix.getNumberOfColumn()-1;
+			//this.positionX =lMatrix.getNumberOfColumn()-1;
 			direction = Direction.aucune;
 		}
 		if(this.positionY<0)
 		{
-			this.positionY=lMatrix.getNumberOfLine()-1;
+			//this.positionY=lMatrix.getNumberOfLine()-1;
 			direction = Direction.aucune;
 		}
-		if(this.positionX>=lMatrix.getNumberOfColumn())
+		if(this.positionX>=lMatrix.getNumberOfColumn()-1)
 		{
 		
-			this.positionX =1;
+			//this.positionX =1;
 			direction = Direction.aucune;
 		}
-		if(this.positionY>=lMatrix.getNumberOfLine())
+		if(this.positionY>=lMatrix.getNumberOfLine()-1)
 		{
-			this.positionY=1;
+			//this.positionY=1;
 			direction = Direction.aucune;
 		}
 		/*System.out.println("______________");
@@ -117,15 +117,15 @@ public class Fourmi implements LangtonEngine{
 	public void nextGeneration() {
 
 
-		Boolean cellIsWhite = lMatrix.getValue(this.positionX, this.positionY);
+		Boolean cellIsWhite = lMatrix.getValue(this.positionY, this.positionX);
 		if(cellIsWhite)
 		{
-			lMatrix.unActivateCell(this.positionX, this.positionY);
+			lMatrix.unActivateCell(this.positionY, this.positionX);
 			
 		}
 		else
 		{
-			lMatrix.activateCell(this.positionX, this.positionY);
+			lMatrix.activateCell(this.positionY, this.positionX);
 		}
 
 		/*
@@ -205,10 +205,11 @@ public class Fourmi implements LangtonEngine{
 	//set position to start the ants (fourmi) 
 	@Override
 	public void startAt(int posx, int posy) {
-		lMatrix.activateCell(posx, posy);
-		this.positionX=posx;
-		this.positionY = posy;
 		initPosition();
+		lMatrix.activateCell(posy,posx);
+		this.positionX=posx;
+		this.positionY=posy;
+		
 		
 	}
 

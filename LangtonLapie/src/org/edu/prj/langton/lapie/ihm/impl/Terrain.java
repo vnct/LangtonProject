@@ -12,10 +12,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.LangtonGUI;
@@ -40,27 +44,140 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 	private Fourmi myFourmi = null;
 	private JTextField textField_positionX;
 	private JTextField textField_positionY;
-	Integer largeur = 300;
-	Integer hauteur = 300;
 	private JTextField textField_step;
+	private JTextField textField_nbColonne;
+	private JTextField textField_nbLigne;
+	private JSlider sliderSpeed;
 	/**
 	 * Create the panel.
 	 */
 	public Terrain() {
 		
 		setIHM();
-
-				setVisible(true);
+		setVisible(true);
 	}
 
 
 	private void setIHM()
 	{
 		setTitle("Fourmi de Langton");
+		
+		setBounds(100, 100, 658, 431);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(200, 200, 505, 370);
-		setResizable(false);
-		/* IHM -->   */
+		
+		JPanel panel = new JPanel();
+		 getContentPane().add(panel, BorderLayout.EAST);
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblSelectSpeed = new JLabel("Select Speed");
+		lblSelectSpeed.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblSelectSpeed);
+		
+		sliderSpeed = new JSlider();
+		panel.add(sliderSpeed);
+		sliderSpeed.setMinimum(1);
+		sliderSpeed.setMaximum(100);
+		sliderSpeed.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				mySwingTimer.setDelay(sliderSpeed.getValue());
+				
+			}
+		});
+		
+		JButton btnStart = new JButton("Start");
+		panel.add(btnStart);
+		btnStart.addActionListener(this);
+		
+		JButton btnStop = new JButton("Stop");
+		panel.add(btnStop);
+		btnStop.addActionListener(this);
+		
+		JPanel panel_steps = new JPanel();
+		panel.add(panel_steps);
+		panel_steps.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel lblNewLabel_Step = new JLabel("Steps :");
+		lblNewLabel_Step.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_steps.add(lblNewLabel_Step);
+		
+		textField_step = new JTextField();
+		panel_steps.add(textField_step);
+		textField_step.setColumns(10);
+		textField_step.setText("200");
+		
+		JButton btnNextGeneration = new JButton("Next Generation");
+		panel.add(btnNextGeneration);
+		btnNextGeneration.addActionListener(this);
+		
+		JPanel panel_nbColonne = new JPanel();
+		panel.add(panel_nbColonne);
+		panel_nbColonne.setLayout(new GridLayout(0, 2, 0, 0));
+		
+
+		JLabel lblNewLabel_nbColonne = new JLabel("Nb Colonnes : ");
+		lblNewLabel_nbColonne.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_nbColonne.add(lblNewLabel_nbColonne);
+		
+		textField_nbColonne = new JTextField();
+		panel_nbColonne.add(textField_nbColonne);
+		textField_nbColonne.setText("400");
+		textField_nbColonne.setColumns(10);
+		
+		JPanel panel_nbLigne= new JPanel();
+		panel.add(panel_nbLigne);
+		panel_nbLigne.setLayout(new GridLayout(0, 2, 0, 0));
+		
+
+		JLabel lblNewLabel_nbLigne = new JLabel("Nb Lignes :");
+		lblNewLabel_nbLigne.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_nbLigne.add(lblNewLabel_nbLigne);
+		
+		textField_nbLigne = new JTextField();
+		panel_nbLigne.add(textField_nbLigne);
+		textField_nbLigne.setText("300");
+		textField_nbLigne.setColumns(10);
+		
+		JPanel panel_positionX = new JPanel();
+		panel.add(panel_positionX);
+		panel_positionX.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		
+		
+		JLabel lblNewLabel_PositionX = new JLabel("Position X :");
+		lblNewLabel_PositionX.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_positionX.add(lblNewLabel_PositionX);
+		
+		textField_positionX = new JTextField();
+		panel_positionX.add(textField_positionX);
+		textField_positionX.setText("100");
+		textField_positionX.setColumns(10);
+		
+		JPanel panel_positionY = new JPanel();
+		panel.add(panel_positionY);
+		panel_positionY.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel lblNewLabel_PositionY = new JLabel("Position Y :");
+		
+		lblNewLabel_PositionY.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_positionY.add(lblNewLabel_PositionY);
+		
+		textField_positionY = new JTextField();
+		panel_positionY.add(textField_positionY);
+		textField_positionY.setColumns(10);
+		textField_positionY.setText("150");
+		
+		JButton btnRestart = new JButton("Restart");
+		panel.add(btnRestart);
+		btnRestart.addActionListener(this);
+		
+		JButton btnSwitch = new JButton("Switch Color");
+		panel.add(btnSwitch);
+		btnSwitch.addActionListener(this);
+		
+			 getContentPane().add(uiMatrix, BorderLayout.CENTER);
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -68,146 +185,12 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 		menuBar.add(mnMore);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(this);
 		mnMore.add(mntmAbout);
+		mntmAbout.addActionListener(this);
 		
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mntmExit.addActionListener(this);
-		mnMore.add(mntmExit);
-		
-		contentPane = new JPanel();
-		
-		setContentPane(contentPane);
-		
-		JPanel settings = new JPanel();
-		GridBagLayout gbl_settings = new GridBagLayout();
-		gbl_settings.columnWidths = new int[]{69, 0, 0};
-		gbl_settings.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_settings.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_settings.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		settings.setLayout(gbl_settings);
-		
-		JButton btnNextgeneration = new JButton("Next Generation");
-		btnNextgeneration.addActionListener(this);
-		
-		JButton btnSimulation = new JButton("Start / Stop");
-		btnSimulation.addActionListener(this);
-		GridBagConstraints gbc_btnSimulation = new GridBagConstraints();
-		gbc_btnSimulation.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSimulation.gridwidth = 2;
-		gbc_btnSimulation.insets = new Insets(0, 0, 5, 0);
-		gbc_btnSimulation.gridx = 0;
-		gbc_btnSimulation.gridy = 0;
-		settings.add(btnSimulation, gbc_btnSimulation);
-		
-		JLabel lblStep = new JLabel("Step :");
-		GridBagConstraints gbc_lblStep = new GridBagConstraints();
-		gbc_lblStep.insets = new Insets(10, 0, 5, 5);
-		gbc_lblStep.gridx = 0;
-		gbc_lblStep.gridy = 1;
-		settings.add(lblStep, gbc_lblStep);
-		
-		textField_step = new JTextField();
-		textField_step.setText("200");
-		GridBagConstraints gbc_textField_step = new GridBagConstraints();
-		gbc_textField_step.insets = new Insets(10, 0, 5, 0);
-		gbc_textField_step.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_step.gridx = 1;
-		gbc_textField_step.gridy = 1;
-		settings.add(textField_step, gbc_textField_step);
-		textField_step.setColumns(10);
-		
-		GridBagConstraints gbc_btnNextgeneration = new GridBagConstraints();
-		gbc_btnNextgeneration.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNextgeneration.gridwidth = 2;
-		gbc_btnNextgeneration.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNextgeneration.anchor = GridBagConstraints.NORTH;
-		gbc_btnNextgeneration.gridx = 0;
-		gbc_btnNextgeneration.gridy = 2;
-		settings.add(btnNextgeneration, gbc_btnNextgeneration);
-		
-		JLabel lblPositionFourmi = new JLabel("Position Fourmi :");
-		GridBagConstraints gbc_lblPositionFourmi = new GridBagConstraints();
-		gbc_lblPositionFourmi.gridwidth = 2;
-		gbc_lblPositionFourmi.insets = new Insets(20, 0, 5, 0);
-		gbc_lblPositionFourmi.gridx = 0;
-		gbc_lblPositionFourmi.gridy = 3;
-		settings.add(lblPositionFourmi, gbc_lblPositionFourmi);
-		
-		JLabel lblPositionX = new JLabel("Position X :");
-		GridBagConstraints gbc_lblPositionX = new GridBagConstraints();
-		gbc_lblPositionX.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPositionX.gridx = 0;
-		gbc_lblPositionX.gridy = 4;
-		settings.add(lblPositionX, gbc_lblPositionX);
-		
-		textField_positionX = new JTextField();
-		textField_positionX.setText("0");
-		GridBagConstraints gbc_textField_positionX = new GridBagConstraints();
-		gbc_textField_positionX.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_positionX.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_positionX.gridx = 1;
-		gbc_textField_positionX.gridy = 4;
-		settings.add(textField_positionX, gbc_textField_positionX);
-		textField_positionX.setColumns(8);
-		
-		JLabel lblPositionY = new JLabel("Position Y :");
-		GridBagConstraints gbc_lblPositionY = new GridBagConstraints();
-		gbc_lblPositionY.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPositionY.gridx = 0;
-		gbc_lblPositionY.gridy = 5;
-		settings.add(lblPositionY, gbc_lblPositionY);
-		
-		textField_positionY = new JTextField();
-		textField_positionY.setText("0");
-		GridBagConstraints gbc_textField_positionY = new GridBagConstraints();
-		gbc_textField_positionY.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_positionY.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_positionY.gridx = 1;
-		gbc_textField_positionY.gridy = 5;
-		settings.add(textField_positionY, gbc_textField_positionY);
-		textField_positionY.setColumns(6);
-		
-		//Terrain myterrain = new Terrain();
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(uiMatrix, GroupLayout.PREFERRED_SIZE, largeur, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(settings, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					)
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(uiMatrix, GroupLayout.PREFERRED_SIZE, hauteur, GroupLayout.PREFERRED_SIZE)
-						.addComponent(settings, GroupLayout.PREFERRED_SIZE, hauteur, GroupLayout.PREFERRED_SIZE))
-					)
-		);
-		
-		JButton btnRestart = new JButton("Restart");
-		btnRestart.addActionListener(this);
-		GridBagConstraints gbc_btnRestart = new GridBagConstraints();
-		gbc_btnRestart.insets = new Insets(0, 0, 5, 0);
-		gbc_btnRestart.gridwidth = 2;
-		gbc_btnRestart.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnRestart.gridx = 0;
-		gbc_btnRestart.gridy = 6;
-		settings.add(btnRestart, gbc_btnRestart);
-		
-		JButton btnSwitchColor = new JButton("Switch Color");
-		GridBagConstraints gbc_btnSwitchColor = new GridBagConstraints();
-		gbc_btnSwitchColor.insets = new Insets(40, 0, 0, 0);
-		gbc_btnSwitchColor.anchor = GridBagConstraints.SOUTH;
-		gbc_btnSwitchColor.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSwitchColor.gridwidth = 2;
-		gbc_btnSwitchColor.gridx = 0;
-		gbc_btnSwitchColor.gridy = 7;
-		btnSwitchColor.addActionListener(this);
-		settings.add(btnSwitchColor, gbc_btnSwitchColor);
-		contentPane.setLayout(gl_contentPane);
+		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mnMore.add(mntmQuit);
+		mntmQuit.addActionListener(this);
 
 	}
 	@Override
@@ -216,11 +199,12 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 		if(myFourmi==null)
 		{
 			myFourmi = (Fourmi) arg0;
-			
+			textField_nbColonne.setText(String.valueOf(myFourmi.getState().getNumberOfColumn()));
+			textField_nbLigne.setText(String.valueOf(myFourmi.getState().getNumberOfLine()));
 		}
 
 		uiMatrix.update(myFourmi.getState());
-		uiMatrix.setBounds(0, 0, myFourmi.getState().getNumberOfColumn(),myFourmi.getState().getNumberOfLine());
+	//	uiMatrix.setBounds(0, 0, myFourmi.getState().getNumberOfColumn(),myFourmi.getState().getNumberOfLine());
 	}
 	public void switchColor()
 	{
@@ -238,10 +222,11 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
         }
      });
 	
-	public void initFourmi(Integer largeur, Integer hauteur,Integer posX, Integer posY)
+	public void initFourmi(Integer nb_col, Integer nb_line,Integer posX, Integer posY)
 	{
 		
-		myFourmi.initialise(largeur,hauteur);
+		myFourmi.initialise(nb_col,nb_line);
+		System.out.println("toto");
         myFourmi.startAt(posX,posY);
         addFourmi(myFourmi);
 	}
@@ -256,7 +241,7 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 			JOptionPane.showMessageDialog(getParent(), "Créé par Vincent dans le cadre d'un cours JAVA","About",1);
 			
 			break;
-		case "Exit":
+		case "Quit":
 			System.exit(0);
 			break;
 		case "Next Generation":
@@ -269,7 +254,9 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 			}
 			
 			break;
-		case "Start / Stop":
+		case "Start":
+			
+			
 			
 			 if(mySwingTimer.isRunning())
 			 {
@@ -283,13 +270,25 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 		      
 				
 			break;
+		case "Stop":
+			
+			 if(mySwingTimer.isRunning())
+			 {
+				 mySwingTimer.stop();
+			 }
+			
+		      	
+			break;
 		case "Restart":
 			try{
-				initFourmi(largeur,hauteur,Integer.parseInt(textField_positionX.getText()),Integer.parseInt(textField_positionY.getText()));
+			
+				initFourmi(Integer.parseInt(textField_nbColonne.getText()),Integer.parseInt(textField_nbLigne.getText()),Integer.parseInt(textField_positionX.getText()),Integer.parseInt(textField_positionY.getText()));
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(getParent(), "o > Nombre à saisir < 300","Erreur Saisie",0);
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(getParent(), "Position X entre : o et " + myFourmi.getState().getNumberOfColumn() +
+						System.lineSeparator() + "Position Y entre : o et " + myFourmi.getState().getNumberOfLine(),"Erreur Saisie",0);
 				
 			}
 			

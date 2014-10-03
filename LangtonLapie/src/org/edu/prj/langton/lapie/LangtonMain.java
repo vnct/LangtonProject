@@ -11,9 +11,9 @@ public class LangtonMain{
 	
 	 public static void main(String[] args) {
 	 /** build fourmi */
-		LangtonEngine myFourmi = new Fourmi();
+		Fourmi myFourmi = new Fourmi();
     	myFourmi.initialise(300, 300);
-    	myFourmi.startAt(50, 50);
+    	myFourmi.startAt(250,100);
     
     /** build terrain */
     	LangtonGUI terrain = new Terrain();
