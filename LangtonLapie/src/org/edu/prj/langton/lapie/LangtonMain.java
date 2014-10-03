@@ -256,12 +256,16 @@ public class LangtonMain extends JFrame implements ActionListener {
         myFourmi.startAt(posX,posY);
         myterrain.addFourmi(myFourmi);
 	}
+
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String cmd = arg0.getActionCommand();
 		switch (cmd) {
 		case "About":
-			JOptionPane.showMessageDialog(getParent(), "Créé par Vincent dans le cadre d'un cours JAVA");
+			JOptionPane.showMessageDialog(getParent(), "Créé par Vincent dans le cadre d'un cours JAVA","About",1);
+			
 			break;
 		case "Exit":
 			System.exit(0);
@@ -272,7 +276,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 			}
 			catch(Exception exception)
 			{
-				System.out.println("E");
+				
 			}
 			
 			break;
@@ -296,7 +300,8 @@ public class LangtonMain extends JFrame implements ActionListener {
 			}
 			catch(Exception e)
 			{
-				System.err.println("e");
+				JOptionPane.showMessageDialog(getParent(), "o > Nombre à saisir < 300","Erreur Saisie",0);
+				
 			}
 			
 			break;
