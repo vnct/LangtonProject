@@ -11,6 +11,7 @@ public class Fourmi implements LangtonEngine{
 	protected LMatrix lMatrix;
 	protected Integer positionX;
 	protected Integer positionY;
+	
 	protected enum Direction 	{
 			aucune, ouest, est, nord, sud
 		};
@@ -26,7 +27,7 @@ public class Fourmi implements LangtonEngine{
 		chooseDirection(getRandom(1, 4));
 		
 	}
-	public void initPosition()
+	private void initPosition()
 	{
 		chooseDirection(getRandom(1, 4));
 	}
@@ -68,6 +69,7 @@ public class Fourmi implements LangtonEngine{
 	public LMatrix getState() {
 		return lMatrix;
 	}
+	
 	
 	//set size of land 
 	@Override
@@ -206,6 +208,7 @@ public class Fourmi implements LangtonEngine{
 		lMatrix.activateCell(posx, posy);
 		this.positionX=posx;
 		this.positionY = posy;
+		initPosition();
 		
 	}
 
