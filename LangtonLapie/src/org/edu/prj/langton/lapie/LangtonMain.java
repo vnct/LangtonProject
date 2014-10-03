@@ -37,6 +37,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 
@@ -80,7 +81,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 			
 		setTitle("Fourmi de Langton");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(200, 200, 492, 370);
+		setBounds(200, 200, 505, 370);
 		setResizable(false);
 		
 		/* IHM -->   */
@@ -260,7 +261,7 @@ public class LangtonMain extends JFrame implements ActionListener {
 		String cmd = arg0.getActionCommand();
 		switch (cmd) {
 		case "About":
-			System.out.println("About");
+			JOptionPane.showMessageDialog(getParent(), "Créé par Vincent dans le cadre d'un cours JAVA");
 			break;
 		case "Exit":
 			System.exit(0);

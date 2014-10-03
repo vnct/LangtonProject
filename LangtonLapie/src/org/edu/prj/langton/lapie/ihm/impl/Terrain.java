@@ -42,6 +42,7 @@ public class Terrain extends JPanel implements LangtonGUI{
 		Color co = uiMatrix.getBackgroundColor();
 		uiMatrix.setBackgroundColor(uiMatrix.getCellColor());
 		uiMatrix.setCellColor(co);
+		
 	}
 	
 }
