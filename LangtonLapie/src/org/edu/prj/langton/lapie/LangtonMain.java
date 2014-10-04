@@ -1,13 +1,12 @@
 package org.edu.prj.langton.lapie;
 
 
-import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.LangtonGUI;
 import org.edu.prj.langton.lapie.calculateur.impl.Fourmi;
 import org.edu.prj.langton.lapie.ihm.impl.Terrain;
 
 
-public class LangtonMain{
+public class LangtonMain {
 	
 	 public static void main(String[] args) {
 	 /** build fourmi */

@@ -2,8 +2,6 @@ package org.edu.prj.langton.lapie.ihm.impl;
 
 import java.awt.BorderLayout;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,31 +14,26 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.edu.prj.langton.LangtonEngine;
 import org.edu.prj.langton.LangtonGUI;
 import org.edu.prj.langton.lapie.calculateur.impl.Fourmi;
-import org.edu.prj.langton.utils.LMatrix;
 import org.edu.prj.langton.utils.UIMatrix;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import net.miginfocom.swing.MigLayout;
 
 public class Terrain extends JFrame implements LangtonGUI,ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7733966115723626870L;
 	private UIMatrix uiMatrix = new UIMatrix();
-	private JPanel contentPane;
 	private Fourmi myFourmi = null;
 	private JTextField textField_positionX;
 	private JTextField textField_positionY;
@@ -226,7 +219,7 @@ public class Terrain extends JFrame implements LangtonGUI,ActionListener{
 	{
 		
 		myFourmi.initialise(nb_col,nb_line);
-		System.out.println("toto");
+		
         myFourmi.startAt(posX,posY);
         addFourmi(myFourmi);
 	}
